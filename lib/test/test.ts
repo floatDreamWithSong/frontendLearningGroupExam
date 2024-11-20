@@ -47,7 +47,7 @@ export const start = ({
         expect.soft(Tester.get('sub')(1, 2), 'A-B问题，测试1-2=-1失败').toBe(-1)
         expect(Tester.get('sub')(2, 2), 'A-B问题，测试2-2=0失败').toBe(0)
         onTestFinished(() => {
-            console.log('A-B问题测试结果上传中...')
+            console.log('%cA-B问题测试结果上传中...','color: red')
         })
     })
 }

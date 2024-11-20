@@ -1,5 +1,8 @@
-export type Problem = 'add' | 'sub'
-export type GetFnTypeByName<T extends Problem> =
-    T extends 'add' ? (a: number, b: number) => number
-    : T extends 'sub' ? (a: number, b: number) => number
-    : (...args: any[]) => any
+
+interface I {
+    'add': (a: number, b: number) => number,
+    'sub': (a: number, b: number) => number
+}
+
+export type Problem = keyof I
+export type GetFnTypeByName<T extends Problem> = I[T]
