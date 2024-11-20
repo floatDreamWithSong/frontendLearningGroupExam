@@ -15,7 +15,7 @@ class Tester {
  * @param problemName 测试问题名
  * @param fn 你的测试函数
  */
-export const addTestFunction = <T extends Problem>(problemName: T, fn: GetFnTypeByName<T>) => {
+export const addTestFunction = <T extends Exclude<Problem,'add'>>(problemName: T, fn: GetFnTypeByName<T>) => {
     Tester.reg(problemName, fn)
 };
 const printError = (str: string, e: TaskResult) => console.error(str, e.errors?.map(i => i.message))
@@ -23,8 +23,16 @@ const printError = (str: string, e: TaskResult) => console.error(str, e.errors?.
  * 添加到你的vitest的describe中以启动测试
  * @param fn 你的答案函数所处函数
  */
-export const start = (fn?: (...args: any[]) => any) => {
-    addTestFunction('add', (a: number, b: number) => {
+export const start = ({
+    fn,
+    userName,
+    selectedProblems
+}: {
+    fn?: (...args: any[]) => any,
+    userName: string,
+    selectedProblems?: Exclude<Problem,'add'>[]
+}) => {
+    Tester.reg('add', (a: number, b: number) => {
         return a + b;
     })
     test('检测自动化单元测试是否可用', ({ onTestFailed, onTestFinished }) => {
@@ -35,6 +43,7 @@ export const start = (fn?: (...args: any[]) => any) => {
             console.log('自动化单元测试可用性的测试结果上传中...')
         })
     })
+    
     fn ? fn() : 0;
     test('题目：A-B问题', ({ onTestFailed, onTestFinished }) => {
         onTestFailed((e) => printError('A-B问题，发生错误，错误信息：\n', e))

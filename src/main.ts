@@ -1,5 +1,5 @@
 //在这个文件中添加你的代码， 下面不是函数代码的注释的注释都可以删了
-import { addTestFunction, start } from "../lib"
+import { addTestFunction } from "../lib"
 
 export const yourAnswer = () => {
   // 在这里编写你的答案，使用示范：
