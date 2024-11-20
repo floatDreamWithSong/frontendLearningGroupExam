@@ -1,0 +1,1 @@
+export { addTestFunction, start} from './test/test'
