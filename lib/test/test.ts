@@ -25,11 +25,9 @@ const printError = (str: string, e: TaskResult) => console.error(str, e.errors?.
  */
 export const start = ({
     fn,
-    userName,
     selectedProblems
 }: {
     fn?: (...args: any[]) => any,
-    userName: string,
     selectedProblems?: Exclude<Problem,'add'>[]
 }) => {
     Tester.reg('add', (a: number, b: number) => {
@@ -43,7 +41,6 @@ export const start = ({
             console.log('自动化单元测试可用性的测试结果上传中...')
         })
     })
-    
     fn ? fn() : 0;
     test('题目：A-B问题', ({ onTestFailed, onTestFinished }) => {
         onTestFailed((e) => printError('A-B问题，发生错误，错误信息：\n', e))
