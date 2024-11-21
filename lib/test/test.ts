@@ -1,7 +1,6 @@
-import { expect, test } from 'vitest'
 import { GetFnTypeByName, Problem } from "../types";
-import { printError } from '../func';
-import { Judgement } from '../func/question';
+import { Judgement } from '../func/judgement';
+import { EnableTest } from '../func/questiones';
 
 class Tester {
     private static pool = new Map<Problem, (...args: any[]) => any>();
@@ -20,7 +19,7 @@ class Tester {
  * @param problemName 测试问题名
  * @param fn 你的测试函数
  */
-export const addTestFunction = <T extends Exclude<Problem, 'test'>>(problemName: T, fn: GetFnTypeByName<T>) => {
+export const addTestFunction = <T extends Problem>(problemName: T, fn: GetFnTypeByName<T>) => {
     Tester.reg(problemName, fn)
 };
 
@@ -33,19 +32,9 @@ export const start = ({
     selectedProblems
 }: {
     fn: (...args: any[]) => any,
-    selectedProblems: Exclude<Problem, 'test'>[]
+    selectedProblems: Problem[]
 }) => {
-    Tester.reg('test', (a: number, b: number) => {
-        return a + b;
-    })
-    test('检测自动化单元测试是否可用', ({ onTestFailed, onTestFinished }) => {
-        onTestFailed((e) => printError('自动化单元测试的加法测试发生错误，错误信息：\n', e))
-        expect.soft(Tester.get('test')(1, 2), '加法测试1+2=3失败').toBe(3)
-        expect(Tester.get('test')(2, 2), '加法测试2+2=4失败').toBe(4)
-        onTestFinished(() => {
-            console.log('自动化单元测试可用性的测试结果上传中...')
-        })
-    })
+    EnableTest()
     if (fn === undefined || fn === null)
         throw new TypeError("arguments 'fn' expected to be 'not null or undefined'")
     fn ? fn() : 0;
