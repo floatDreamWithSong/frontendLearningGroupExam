@@ -1,9 +1,10 @@
-import { addTestFunction } from "../lib"
+import { answerQuestion } from "../lib"
+import { GetAnswerType } from "../lib/types"
 
 export const yourAnswer = () => {
   // 在这里编写你的答案，使用示范：
   //
-  // addTestFunction('test',(a: number, b: number)=>{
+  // answerQuestion('test',(a: number, b: number)=>{
   //   return a+b;
   // })
   //
@@ -12,17 +13,17 @@ export const yourAnswer = () => {
   // 在控制台使用pnpm test开始测试你的答案
   // 详细见README.md
 
-  addTestFunction('A minus B', (a, b) => {
+  answerQuestion('A minus B', (a, b) => {
     return a - b
   })
-  addTestFunction('URL parse', (url: string) => {
+  answerQuestion('URL parse', (url: string) => {
     const exp_ans = {
       location: 'localhost:80',
       paraments: {
         a: 1,
         b: 'stri'
       }
-    }
+    } as GetAnswerType<'URL parse'>
     return exp_ans
   })
 }

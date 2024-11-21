@@ -1,13 +1,13 @@
-import { GetFnTypeByName, Problem } from "../types";
+import { GetFnTypeByName, Question } from "../types";
 import { Judgement } from '../func/judgement';
-import { EnableTest } from '../func/questiones';
+import { EnableTest } from '../questiones';
 
 class Tester {
-    private static pool = new Map<Problem, (...args: any[]) => any>();
-    public static reg = <T extends Problem>(name: T, fn: GetFnTypeByName<T>) => {
+    private static pool = new Map<Question, (...args: any[]) => any>();
+    public static reg = <T extends Question>(name: T, fn: GetFnTypeByName<T>) => {
         this.pool.set(name, fn);
     }
-    public static get = <T extends Problem>(name: T) => {
+    public static get = <T extends Question>(name: T) => {
         return this.pool.get(name) as GetFnTypeByName<T>
     }
     public static getPool() {
@@ -16,11 +16,11 @@ class Tester {
 }
 /**
  * 
- * @param problemName 测试问题名
- * @param fn 你的测试函数
+ * @param question 测试问题名
+ * @param answer 你的测试函数
  */
-export const addTestFunction = <T extends Problem>(problemName: T, fn: GetFnTypeByName<T>) => {
-    Tester.reg(problemName, fn)
+export const answerQuestion = <T extends Question>(question: T, answer: GetFnTypeByName<T>) => {
+    Tester.reg(question, answer)
 };
 
 /**
@@ -29,19 +29,19 @@ export const addTestFunction = <T extends Problem>(problemName: T, fn: GetFnType
  */
 export const start = ({
     fn,
-    selectedProblems
+    selectedQuestions
 }: {
     fn: (...args: any[]) => any,
-    selectedProblems: Problem[]
+    selectedQuestions: Question[]
 }) => {
     EnableTest()
     if (fn === undefined || fn === null)
         throw new TypeError("arguments 'fn' expected to be 'not null or undefined'")
     fn ? fn() : 0;
-    if (selectedProblems.length === 0)
+    if (selectedQuestions.length === 0)
         testAll()
     else
-        selectedProblems.forEach(name => {
+        selectedQuestions.forEach(name => {
             Judgement.get(name)(Tester.get(name))
         })
 }

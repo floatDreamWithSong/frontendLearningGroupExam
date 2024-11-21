@@ -1,1 +1,1 @@
-export { addTestFunction, start} from './test/test'
+export { answerQuestion, start} from './test/test'
