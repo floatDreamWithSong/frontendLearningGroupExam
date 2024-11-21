@@ -1,7 +1,12 @@
+interface URLParseData {
+    paraments: any,
+    location: string
+}
 
 interface I {
-    'add': (a: number, b: number) => number,
-    'sub': (a: number, b: number) => number
+    'test': (a: number, b: number) => number,
+    'A minus B': (a: number, b: number) => number
+    'URL parse': (url: string) => URLParseData
 }
 
 export type Problem = keyof I
