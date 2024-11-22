@@ -15,7 +15,15 @@ class Tester {
     }
 }
 /**
- * 
+ * ### 使用实例
+ * ```ts
+    answerQuestion({
+        question: 'A minus B',
+        answer(a, b) {
+          return a - b
+        },
+    })
+ * ```
  * @param question 测试问题名
  * @param answer 你的测试函数
  */

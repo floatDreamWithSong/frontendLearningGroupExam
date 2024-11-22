@@ -20,7 +20,6 @@ export const EnableTest = () => {
                 }
             } as GetAnswerType<'URL parse'>)
         },
-
     })
     setQuestion({
         testQuestionName: 'Fibonacci',
@@ -32,7 +31,7 @@ export const EnableTest = () => {
             let ans = [0, 1]
             for (let index = 2; index <= deep; index++) {
                 ans.push(ans[index - 1] + ans[index - 2])
-                expect(answer(index), `答案错误, 此时正在求解 fibo[${index}]`).toBe(ans[index])
+                expect(answer(index), `解得的 fibo[${index}] 的答案不正确`).toBe(ans[index])
             }
         },
     })

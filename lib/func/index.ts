@@ -7,7 +7,26 @@ interface IsetQuestion<T extends Question> {
     failedCallback?: OnTestFailedHandler
     timeOut?: number
 }
+/**
+ * 
+ * @param str 错误消息
+ * @param e 错误事件
+ * @returns 没有啊
+ */
 export const printError = (str: string, e: RunnerTaskResult) => console.error(str, e.errors?.map(i => i.message))
+
+/**
+ * ### 使用示例
+ * ```ts
+    setQuestion({
+        testQuestionName: 'A minus B',
+        testFn(answer) {
+            expect(answer(1, 2), '1-2=3测试失败').toBe(-1)
+            expect(answer(2, 2), '2-2=0测试失败').toBe(0)
+        }
+    })
+ * ```
+ */
 export const setQuestion = <T extends Question>({
     testQuestionName,
     testFn,
@@ -27,7 +46,7 @@ export const setQuestion = <T extends Question>({
             testFn(fn)
             onTestFinished(() => {
                 const consumedTime = new Date().getTime() - startTime
-                if(timeOut !== undefined && timeOut < consumedTime)
+                if (timeOut !== undefined && timeOut < consumedTime)
                     throw new Error(`${testQuestionName}测试，用时${consumedTime}ms，预期用时${timeOut}ms`)
                 else
                     console.log(`${testQuestionName}测试结束，用时${consumedTime}ms`)
