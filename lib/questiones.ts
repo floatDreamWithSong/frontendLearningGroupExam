@@ -20,12 +20,20 @@ export const EnableTest = () => {
                 }
             } as GetAnswerType<'URL parse'>)
         },
-        
+
     })
-    setQuestion({ 
-        testQuestionName:'Fibonacci',
+    setQuestion({
+        testQuestionName: 'Fibonacci',
+        timeOut: 50,
         testFn(answer) {
-            expect(answer(50)).toBe(12586269025)
+            const function_text = answer.toString()
+            expect(/for\s*\(|while\s*\(/.test(function_text), '本题目要求使用递归求解，而不是使用迭代循环求解，').toBe(false)
+            let deep = 40
+            let ans = [0, 1]
+            for (let index = 2; index <= deep; index++) {
+                ans.push(ans[index - 1] + ans[index - 2])
+                expect(answer(index), `答案错误, 此时正在求解 fibo[${index}]`).toBe(ans[index])
+            }
         },
     })
 }

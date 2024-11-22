@@ -12,7 +12,7 @@ export const setQuestion = <T extends Question>({
     testQuestionName,
     testFn,
     failedCallback,
-    timeOut = 1000
+    timeOut
 }: IsetQuestion<T>) => {
     Judgement.reg<T>(testQuestionName, (fn) =>
         it(`测试 ${testQuestionName}`, {
@@ -26,9 +26,11 @@ export const setQuestion = <T extends Question>({
                     : failedCallback)
             testFn(fn)
             onTestFinished(() => {
-                if (Math.random()) {
-                    console.log(`${testQuestionName}测试结束，用时${new Date().getTime() - startTime}ms`)
-                }
+                const consumedTime = new Date().getTime() - startTime
+                if(timeOut !== undefined && timeOut < consumedTime)
+                    throw new Error(`${testQuestionName}测试，用时${consumedTime}ms，预期用时${timeOut}ms`)
+                else
+                    console.log(`${testQuestionName}测试结束，用时${consumedTime}ms`)
             })
         })
     )

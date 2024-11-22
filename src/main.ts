@@ -33,12 +33,20 @@ export const yourAnswer = () => {
     },
   })
   answerQuestion({
-    question:'Fibonacci',
+    question: 'Fibonacci',
+    // skip: true,
     answer(n) {
-      for (let index = 0; index < 4000000000; index++) {
-        const element = index++;
+      const tail = (i: number, pre_1: number, pre_2: number) => {
+        if (i < n) {
+          const cur = pre_1 + pre_2
+          return tail(i + 1, pre_2, cur)
+        }
+        return pre_1 + pre_2
       }
-      return 12586269025
+      if (n <= 1)
+        return n
+      else
+        return tail(2, 0, 1)
     },
   })
 }
