@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "tsc && vite build",
-    "test": "vitest"
+    "test": "vitest",
+    "test1": "vitest -w false"
   },
   "devDependencies": {
     "typescript": "^5.4.5",

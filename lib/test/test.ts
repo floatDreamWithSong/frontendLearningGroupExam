@@ -19,8 +19,9 @@ class Tester {
  * @param question 测试问题名
  * @param answer 你的测试函数
  */
-export const answerQuestion = <T extends Question>({question, answer}:{question: T, answer: GetFnTypeByName<T>}) => {
-    Tester.reg(question, answer)
+export const answerQuestion = <T extends Question>({ question, answer, skip = false }: { question: T, answer: GetFnTypeByName<T>, skip?: boolean }) => {
+    if (!skip)
+        Tester.reg(question, answer)
 };
 
 /**
@@ -29,24 +30,13 @@ export const answerQuestion = <T extends Question>({question, answer}:{question:
  */
 export const start = ({
     fn,
-    selectedQuestions
 }: {
     fn: (...args: any[]) => any,
-    selectedQuestions: Question[]
 }) => {
     EnableTest()
     if (fn === undefined || fn === null)
         throw new TypeError("arguments 'fn' expected to be 'not null or undefined'")
     fn ? fn() : 0;
-    if (selectedQuestions.length === 0)
-        testAll()
-    else
-        selectedQuestions.forEach(name => {
-            Judgement.get(name)(Tester.get(name))
-        })
-}
-
-const testAll = () => {
     Tester.getPool().forEach((fn, name) => {
         Judgement.get(name)(fn)
     })

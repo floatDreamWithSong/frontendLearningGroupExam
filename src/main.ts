@@ -32,6 +32,15 @@ export const yourAnswer = () => {
       return exp_ans
     },
   })
+  answerQuestion({
+    question:'Fibonacci',
+    answer(n) {
+      for (let index = 0; index < 4000000000; index++) {
+        const element = index++;
+      }
+      return 12586269025
+    },
+  })
 }
 
 

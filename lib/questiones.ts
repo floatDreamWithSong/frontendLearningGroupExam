@@ -22,4 +22,10 @@ export const EnableTest = () => {
         },
         
     })
+    setQuestion({ 
+        testQuestionName:'Fibonacci',
+        testFn(answer) {
+            expect(answer(50)).toBe(12586269025)
+        },
+    })
 }

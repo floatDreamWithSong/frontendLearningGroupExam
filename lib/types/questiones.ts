@@ -4,4 +4,5 @@ export interface QuestionList {
         paraments: any,
         location: string
     }
+    'Fibonacci': (n: number) => number
 }
