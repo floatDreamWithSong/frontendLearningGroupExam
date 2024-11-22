@@ -20,9 +20,11 @@
   "scripts": {
     "build": "tsc && vite build",
     "test": "vitest",
-    "test1": "vitest -w false"
+    "once": "vitest -w false",
+    "web": "vitest --ui"
   },
   "devDependencies": {
+    "@vitest/ui": "^2.1.5",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vitest": "^2.1.5"
