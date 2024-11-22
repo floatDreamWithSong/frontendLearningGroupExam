@@ -1,7 +1,7 @@
 import { QuestionList } from "./questiones"
 
 /**
- * 此处为工具函数，可使用但不可修改
+ * 此处为工具函数
  */
 export type Question = keyof QuestionList
 export type GetFnTypeByName<T extends Question> = QuestionList[T]

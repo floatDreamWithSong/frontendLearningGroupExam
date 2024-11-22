@@ -11,16 +11,19 @@
 7. 若设置的题目预期答案类型比较复杂想要类型支持，可以通过`GetAnswerType<>`工具进行强制类型以获得类型提示支持，例如：
 
 ```ts
-answerQuestion('URL parse', (url: string) => {
-  const exp_ans = {
-    location: 'localhost:80',
-    paraments: {
-      a: 1,
-      b: 'stri'
-    }
-  } as GetAnswerType<'URL parse'>
-  return exp_ans
-})
+  answerQuestion({
+    question: 'URL parse',
+    answer(url) {
+      const exp_ans = {
+        location: 'localhost:80',
+        paraments: {
+          a: 1,
+          b: 'stri'
+        }
+      } as GetAnswerType<'URL parse'>
+      return exp_ans
+    },
+  })
 ```
 
 对于**出题人员**，可在`lib/types/questiones.ts`中设置

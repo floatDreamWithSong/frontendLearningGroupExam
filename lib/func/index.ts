@@ -13,16 +13,17 @@ export const setQuestion = <T extends Question>({
     failedCallback
 }: IsetQuestion<T>) => {
     Judgement.reg<T>(testQuestionName, (fn) =>
-        test(`测试 ${testQuestionName}`, ({ onTestFailed, onTestFinished }) => {
+        test(`测试 ${testQuestionName}`, async ({ onTestFailed, onTestFinished }) => {
             console.log(`正在测试：${testQuestionName}...`)
+            const startTime = new Date().getTime()
             onTestFailed(
                 failedCallback === undefined
                     ? (e) => printError(`${testQuestionName} 出现错误，错误信息：\n`, e)
                     : failedCallback)
-            testFn(fn)
+            await testFn(fn)
             onTestFinished(() => {
                 if (Math.random()) {
-                    console.log(`${testQuestionName}测试结束`)
+                    console.log(`${testQuestionName}测试结束，用时${new Date().getTime() - startTime}ms`)
                 }
             })
         })

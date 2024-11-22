@@ -19,7 +19,7 @@ class Tester {
  * @param question 测试问题名
  * @param answer 你的测试函数
  */
-export const answerQuestion = <T extends Question>(question: T, answer: GetFnTypeByName<T>) => {
+export const answerQuestion = <T extends Question>({question, answer}:{question: T, answer: GetFnTypeByName<T>}) => {
     Tester.reg(question, answer)
 };
 

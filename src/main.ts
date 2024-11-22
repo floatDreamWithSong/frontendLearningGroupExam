@@ -13,18 +13,24 @@ export const yourAnswer = () => {
   // 在控制台使用pnpm test开始测试你的答案
   // 详细见README.md
 
-  answerQuestion('A minus B', (a, b) => {
-    return a - b
+  answerQuestion({
+    question: 'A minus B',
+    answer(a, b) {
+      return a - b
+    },
   })
-  answerQuestion('URL parse', (url: string) => {
-    const exp_ans = {
-      location: 'localhost:80',
-      paraments: {
-        a: 1,
-        b: 'stri'
-      }
-    } as GetAnswerType<'URL parse'>
-    return exp_ans
+  answerQuestion({
+    question: 'URL parse',
+    answer(url) {
+      const exp_ans = {
+        location: 'localhost:80',
+        paraments: {
+          a: 1,
+          b: 'stri'
+        }
+      } as GetAnswerType<'URL parse'>
+      return exp_ans
+    },
   })
 }
 
