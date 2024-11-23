@@ -1,5 +1,39 @@
 # 博远信息技术社前端学习小组测验
 
+## 项目结构
+
+``` 项目结构
+└── 📁vite-pak-demo
+    └── 📁lib
+        └── 📁func
+            └── index.ts
+            └── judgement.ts
+        └── 📁test
+            └── test.ts
+        └── 📁types
+            └── index.ts
+            └── questiones.ts # 出题人设置题目类型声明的地方
+        └── answer.ts # 出题人可在此调试自己给的标准答案
+        └── index.ts
+        └── questiones.ts # 出题人设置题目测试点的地方
+    └── 📁public
+        └── vscode.png
+        └── web.png
+    └── 📁src
+        └── main.js # 作答者答题的区域
+        └── main.spec.ts
+        └── vite-env.d.ts
+    └── .env.test # 环境变量
+    └── .gitignore
+    └── index.html
+    └── package-lock.json
+    └── package.json # 可在scripts中查看可运行的命令
+    └── pnpm-lock.yaml
+    └── README.md
+    └── tsconfig.json
+    └── vite.config.ts
+```
+
 ## 使用
 
 > 本项目需要提前安装node环境
@@ -26,8 +60,9 @@
 
 ### 答题使用
 
-5. `src/main.ts`中，作答者可以通过`answerQuestion`函数来作答，参数`question`是题目名称，（受到类型支持），参数`answer`会根据你选择的题目来提示你需要作答的函数类型，若添加了测试函数但是暂时不想对它进行测试，可以再在配置里设置`skip`参数为`true`可以跳过测试，不添加此属性时默认为`false`。
-6. 若设置的题目预期答案类型比较复杂想要类型支持，可以通过`GetAnswerType<>`工具进行强制类型以获得类型提示支持，例如：
+5. 本项目开启了Js/Ts混用模式，使得答题者可以选择自己喜欢的语言来作答。如果喜欢js，则在`src/main.js`中作答；若使用Ts，则修改为`src/main.ts`再作答即可
+6. `src/main.ts`中，作答者可以通过`answerQuestion`函数来作答，参数`question`是题目名称，（受到类型支持），参数`answer`会根据你选择的题目来提示你需要作答的函数类型，若添加了测试函数但是暂时不想对它进行测试，可以再在配置里设置`skip`参数为`true`可以跳过测试，不添加此属性时默认为`false`。
+7. 若设置的题目预期答案类型比较复杂想要类型支持，可以通过`GetAnswerType<>`工具进行强制类型以获得类型提示支持，例如：
 
 ```ts
   answerQuestion({
@@ -45,14 +80,13 @@
   })
 ```
 
-对于**出题人员**，可在`lib/types/questiones.ts`中设置
-- 题目列表，包括题目名称、作答函数类型
-- 导出自定义的类型供作答者使用
+对于**出题人员**
 
-出题人员可在`lib/questiones.ts`，可在此处设置测试函数，
-测试函数会自动打印测试开始与结束标志，
-`testQuestionName`属性可从你在`lib/types/questiones.ts`中设置的题目列表中
-获得类型支持以方便出题者快速选择
+1. 出题人员可在`lib/answer.ts`中通过`answerQuestion`来设置和调试答案，需要在`.env.test`中将`VITE_DEBUGGING_MODE`设置为`on`。调试完成后将`VITE_DEBUGGING_MODE`设置为`off`，这样可以快速在参考答案模式和作答模式中切换回来。
+2. 可在`lib/types/questiones.ts`中设置
+  - 题目列表，包括题目名称、作答函数类型
+  - 导出自定义的类型供作答者使用
+3. 出题人员可在`lib/questiones.ts`，可在此处设置测试函数，测试函数会自动打印测试开始与结束标志，`testQuestionName`属性可从你在`lib/types/questiones.ts`中设置的题目列表中获得类型支持以方便出题者快速选择
 
 ```ts
 setQuestion({

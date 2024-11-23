@@ -1,5 +1,5 @@
-import { answerQuestion } from "../lib"
-import { GetAnswerType } from "../lib/types"
+import { answerQuestion } from "."
+import { GetAnswerType } from "./types"
 
 export const yourAnswer = () => {
   // 在这里编写你的答案，使用示范：
@@ -34,7 +34,6 @@ export const yourAnswer = () => {
   })
   answerQuestion({
     question: 'Fibonacci',
-    // skip: true,
     answer(n) {
       const tail = (i: number, pre_1: number, pre_2: number) => {
         if (i < n) {
