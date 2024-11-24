@@ -4,9 +4,8 @@ import { QuestionList } from "./questiones"
 
 export type Question = keyof QuestionList
 export type GetFnTypeByName<T extends Question> = QuestionList[T]
-export type GetReturnType<F extends (...args: any[]) => any> = F extends (...args: any[]) => infer R ? R : never
 /**
  * ### 使用方法
  * GetAnswerType<'题目名称'>
  */
-export type GetAnswerType<Q extends Question> = GetReturnType<GetFnTypeByName<Q>>
+export type GetAnswerType<Q extends Question> = ReturnType<GetFnTypeByName<Q>>

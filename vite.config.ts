@@ -4,16 +4,17 @@ export default defineConfig({
   build: {
     lib: {
       entry: './lib/index.ts',
-      name: 'Counter',
-      fileName: 'counter'
+      name: 'Index',
+      fileName: 'index'
     },
     rollupOptions: {
-      // external: ["moment"],
-      // output: {
-      //   globals: {
-      //     moment: "moment",
-      //   },
-      // }
+      external: ['@vitest/ui','vitest'],
+      output: {
+        globals: {
+          vitest: 'vitest',
+          '@vitest/ui':'@vitest/ui'
+        },
+      }
     }
   }
 })

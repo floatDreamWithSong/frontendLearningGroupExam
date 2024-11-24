@@ -2,7 +2,7 @@
 
 ## 项目结构
 
-``` 项目结构
+``` 源项目结构
 └── 📁vite-pak-demo
     └── 📁lib
         └── 📁func
@@ -34,18 +34,74 @@
     └── vite.config.ts
 ```
 
-## 使用
+## 答题者使用
 
-> 本项目需要提前安装node环境
+### 安装测试包
+
+#### git clone 模板
+
+直接用 git 把仓库克隆下来，然后在`src/main.js`或者修改为`src/main.ts`，然后在其中编写你的答案
+终端执行脚本，比如`npm run test`或者`pnpm web`等
+
+#### npm包安装
+
+1. 任意创建你的项目，但是保证已经安装了如下依赖：
+  - vitest
+  - @vitest/ui (可选)
+2. 项目安装boyuan-frontest包
+3. 项目新建`index.spec.js`或者`index.spec.ts`文件，在里面填写如下模板
+
+```js
+import { describe } from "vitest";
+import { start } from 'vite-test-pak';
+import { answerQuestion } from 'vite-test-pak';
+describe(`用户`, () => {
+    start({
+        fn: () => {
+            // 在这里编写你的答案，使用示范：
+            //
+            // answerQuestion('test',(a: number, b: number)=>{
+            //   return a+b;
+            // })
+            //
+            // 第一个参数是可选择的问题名称，第二个参数是你的测试函数
+            // 测试函数的类型会根据你的题目名称自动推导出来，请注意你的VSCode的智能类型提示
+            // 在控制台使用pnpm test开始测试你的答案
+            // 详细见README.md
+            answerQuestion({
+              question: 'A minus B',
+              answer(a, b) {
+                return a - b
+              },
+            })
+          }
+    })
+})
+```
+
+4. package.json添加如下字段：
+
+```json
+  "scripts": {
+    "test": "vitest", // 开始测试
+    "once": "vitest -w false", // 开始一次测试
+    "web": "vitest --ui" // 这需要安装 @vitest/ui 才可以使用，可以在浏览器中进一步可视化
+  },
+```
+5. 执行脚本，比如`npm run test`或者`pnpm web`等
+
+## 出题人使用
+
+> 本测验包需要提前安装node环境
 
 ### 安装
 
 1. 将仓库克隆到本地
-2. 终端打开项目目录，使用命令`pnpm i`下载依赖项。
+2. 终端打开项目目录，使用命令`pnpm i --only=dev`下载依赖项。
 
 ### 配置
 
-打开`.env.test`，修改`VITE_USER_NAME`为自己的姓名
+可以打开`.env.test`，修改`VITE_USER_NAME`为自己的昵称（目前没什么用）
 
 ### CLI使用
 
@@ -58,10 +114,36 @@
 
 ![在浏览器中查看的效果](/public/web.png)
 
-### 答题使用
+### 编写题解
 
-5. 本项目开启了Js/Ts混用模式，使得答题者可以选择自己喜欢的语言来作答。如果喜欢js，则在`src/main.js`中作答；若使用Ts，则修改为`src/main.ts`再作答即可
-6. `src/main.ts`中，作答者可以通过`answerQuestion`函数来作答，参数`question`是题目名称，（受到类型支持），参数`answer`会根据你选择的题目来提示你需要作答的函数类型，若添加了测试函数但是暂时不想对它进行测试，可以再在配置里设置`skip`参数为`true`可以跳过测试，不添加此属性时默认为`false`。
+5. 在`src`目录下新建任意`.spec.ts`文件，并添加如下快速开始模板编写答案进行测试。本项目开启了Js/Ts混用模式，方便开发者可以选择自己喜欢的语言来测试答案。
+
+```ts
+describe(`用户`, () => {
+    start({
+        fn: () => {
+            // 在这里编写你的答案，使用示范：
+            //
+            // answerQuestion('test',(a: number, b: number)=>{
+            //   return a+b;
+            // })
+            //
+            // 第一个参数是可选择的问题名称，第二个参数是你的测试函数
+            // 测试函数的类型会根据你的题目名称自动推导出来，请注意你的VSCode的智能类型提示
+            // 在控制台使用pnpm test开始测试你的答案
+            // 详细见README.md
+            answerQuestion({
+              question: 'A minus B',
+              answer(a, b) {
+                return a - b
+              },
+            })
+          }
+    })
+})
+```
+
+6. 作答者可以通过`answerQuestion`函数来作答，参数`question`是题目名称，（受到类型支持），参数`answer`会根据你选择的题目来提示你需要作答的函数类型，若添加了测试函数但是暂时不想对它进行测试，可以再在配置里设置`skip`参数为`true`可以跳过测试，不添加此属性时默认为`false`。
 7. 若设置的题目预期答案类型比较复杂想要类型支持，可以通过`GetAnswerType<>`工具进行强制类型以获得类型提示支持，例如：
 
 ```ts
@@ -80,13 +162,12 @@
   })
 ```
 
-对于**出题人员**
+### 编写测试点
 
-1. 出题人员可在`lib/answer.ts`中通过`answerQuestion`来设置和调试答案，需要在`.env.test`中将`VITE_DEBUGGING_MODE`设置为`on`。调试完成后将`VITE_DEBUGGING_MODE`设置为`off`，这样可以快速在参考答案模式和作答模式中切换回来。
-2. 可在`lib/types/questiones.ts`中设置
+1. 可在`lib/types/questiones.ts`中设置
   - 题目列表，包括题目名称、作答函数类型
   - 导出自定义的类型供作答者使用
-3. 出题人员可在`lib/questiones.ts`，可在此处设置测试函数，测试函数会自动打印测试开始与结束标志，`testQuestionName`属性可从你在`lib/types/questiones.ts`中设置的题目列表中获得类型支持以方便出题者快速选择
+2. 出题人员可在`lib/questiones.ts`，可在此处设置测试函数，测试函数会自动打印测试开始与结束标志，`testQuestionName`属性可从你在`lib/types/questiones.ts`中设置的题目列表中获得类型支持以方便出题者快速选择
 
 ```ts
 setQuestion({
@@ -134,6 +215,18 @@ setQuestion({
 - 参数集合
 - 当前相对路径
 
+例如：
+
+```ts
+{
+    location: 'localhost:80',
+    paraments: {
+        a: 1,
+        b: 'stri'
+    }
+} 
+```
+
 > 可以使用`GetAnswerType<'URL parse'>`来获得返回值类型支持
 
 ### 斐波那契数列求解
@@ -146,10 +239,3 @@ setQuestion({
 
 数据范围：`n<=38`
 时间范围：`50ms`
-
-
-### 柯里化
-
-**难度：**`中等`
-
-**要求：** 返回给定函数的柯里化形式
