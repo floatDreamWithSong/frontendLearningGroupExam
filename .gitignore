@@ -24,3 +24,4 @@ src/answer.ts
 *.sln
 *.sw?
 types
+*.tgz
