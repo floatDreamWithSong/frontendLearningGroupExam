@@ -45,41 +45,40 @@
 
 #### npm包安装
 
-1. 任意创建你的项目，但是保证已经安装了如下依赖：
+
+1. 随便新建一个文件夹并在终端打开，初始化npm后（可以执行`npm init`等），项目安装boyuan-frontest包：`npm i boyuan-frontest`。备注：如果使用pnpm等，可能会因为你的pnpm配置问题没有下载到boyuan-frontest的依赖，请确保你的node_modules安装了：
   - vitest
   - @vitest/ui (可选)
-2. 项目安装boyuan-frontest包
-3. 项目新建`index.spec.js`或者`index.spec.ts`文件，在里面填写如下模板
+2. 项目新建任意`.spec.js`或者`.spec.ts`后缀的文件，在里面填写如下模板
 
 ```js
-import { describe } from "vitest";
 import { start } from 'vite-test-pak';
 import { answerQuestion } from 'vite-test-pak';
-describe(`用户`, () => {
-    start({
-        fn: () => {
-            // 在这里编写你的答案，使用示范：
-            //
-            // answerQuestion('test',(a: number, b: number)=>{
-            //   return a+b;
-            // })
-            //
-            // 第一个参数是可选择的问题名称，第二个参数是你的测试函数
-            // 测试函数的类型会根据你的题目名称自动推导出来，请注意你的VSCode的智能类型提示
-            // 在控制台使用pnpm test开始测试你的答案
-            // 详细见README.md
-            answerQuestion({
-              question: 'A minus B',
-              answer(a, b) {
-                return a - b
-              },
-            })
-          }
-    })
+
+start({
+    main: () => {
+        // 在这里编写你的答案，使用示范：
+        //
+        // answerQuestion('test',(a: number, b: number)=>{
+        //   return a+b;
+        // })
+        //
+        // 第一个参数是可选择的问题名称，第二个参数是你的测试函数
+        // 测试函数的类型会根据你的题目名称自动推导出来，请注意你的VSCode的智能类型提示
+        // 在控制台使用pnpm test开始测试你的答案
+        // 详细见README.md
+        answerQuestion({
+          question: 'A minus B',
+          answer(a, b) {
+            return a - b
+          },
+        })
+      }
 })
+
 ```
 
-4. package.json添加如下字段：
+4. package.json添加如下字段，记得删注释：
 
 ```json
   "scripts": {
@@ -99,10 +98,6 @@ describe(`用户`, () => {
 1. 将仓库克隆到本地
 2. 终端打开项目目录，使用命令`pnpm i --only=dev`下载依赖项。
 
-### 配置
-
-可以打开`.env.test`，修改`VITE_USER_NAME`为自己的昵称（目前没什么用）
-
 ### CLI使用
 
 1. 终端输入`pnpm test`，开启测试，测试会持续追踪你的文件改动以自动测试。
@@ -119,9 +114,9 @@ describe(`用户`, () => {
 5. 在`src`目录下新建任意`.spec.ts`文件，并添加如下快速开始模板编写答案进行测试。本项目开启了Js/Ts混用模式，方便开发者可以选择自己喜欢的语言来测试答案。
 
 ```ts
-describe(`用户`, () => {
+// describe(`用户`, () => { # 如果有需要，你可以在start函数外部套一层describe，以便做一些其他的处理
     start({
-        fn: () => {
+        main: () => {
             // 在这里编写你的答案，使用示范：
             //
             // answerQuestion('test',(a: number, b: number)=>{
@@ -140,7 +135,7 @@ describe(`用户`, () => {
             })
           }
     })
-})
+// })
 ```
 
 6. 作答者可以通过`answerQuestion`函数来作答，参数`question`是题目名称，（受到类型支持），参数`answer`会根据你选择的题目来提示你需要作答的函数类型，若添加了测试函数但是暂时不想对它进行测试，可以再在配置里设置`skip`参数为`true`可以跳过测试，不添加此属性时默认为`false`。
@@ -199,7 +194,7 @@ setQuestion({
 })
 ```
 
-## 题目
+## 现有题目
 
 ### A-B问题
 
@@ -239,3 +234,7 @@ setQuestion({
 
 数据范围：`n<=38`
 时间范围：`50ms`
+
+## 附录
+
+1. 有的时候开发者的环境变量会因为IDE检测问题导致显示爆红，不过不影响

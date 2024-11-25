@@ -34,17 +34,17 @@ export const answerQuestion = <T extends Question>({ question, answer, skip = fa
 
 /**
  * 添加到你的vitest的describe中以启动测试
- * @param fn 你的答案函数所处函数
+ * @param main 你的答案函数所处函数
  */
 export const start = ({
-    fn,
+    main,
 }: {
-    fn: (...args: any[]) => any,
+    main: (...args: any[]) => any,
 }) => {
     EnableTest()
-    if (fn === undefined || fn === null)
-        throw new TypeError("arguments 'fn' expected to be 'not null or undefined'")
-    fn ? fn() : 0;
+    if (main === undefined || main === null)
+        throw new TypeError("arguments 'main' expected to be 'not null or undefined'")
+    main ? main() : 0;
     Tester.getPool().forEach((fn, name) => {
         Judgement.get(name)(fn)
     })
