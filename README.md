@@ -40,8 +40,11 @@
 
 #### git clone 模板
 
-直接用 git 把仓库克隆下来，然后在`src/main.js`或者修改为`src/main.ts`，然后在其中编写你的答案
+直接用 git 把仓库克隆下来，然后安装依赖，比如执行`pnpm i`等
+然后在`src/main.js`或者修改为`src/main.ts`，然后在其中编写你的答案
 终端执行脚本，比如`npm run test`或者`pnpm web`等
+
+优点是比较方便，缺点是新题目发布在仓库时，本地git同步后，可能会产生git冲突，需要重新clone一个项目会比较保险
 
 #### npm包安装
 
@@ -88,6 +91,8 @@ start({
   },
 ```
 5. 执行脚本，比如`npm run test`或者`pnpm web`等
+
+优点是新题目发布后只需要更新依赖包，例如`pnpm update boyuan-frontend`就可以了，缺点是初始化项目稍微麻烦一点点。
 
 ## 出题人使用
 
